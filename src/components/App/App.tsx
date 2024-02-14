@@ -1,28 +1,26 @@
-import logo from '../../assets/logo.svg';
-
+import React from 'react';
+import Display from '../Display/Display';
+import ButtonPanel from '../ButtonPanel/ButtonPanel';
+import calculate from '../../Logic/Calculate';
 import './App.scss';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+export default class App extends React.Component {
+  state = {
+    total: null,
+    next: null,
+    operation: null,
+  };
 
-        <p>
-          Edit <code>src/components/App/App.jsx</code> and save to reload.
-        </p>
+  handleClick = (buttonName) => {
+    this.setState(calculate(this.state, buttonName));
+  };
 
-        <a
-          className="App-link"
-          href="https://react.dev/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  render() {
+    return (
+      <div className="component-app">
+        <Display value={this.state.next || this.state.total || '0'} />
+        <ButtonPanel clickHandler={this.handleClick} />
+      </div>
+    );
+  }
 }
-
-export default App;
